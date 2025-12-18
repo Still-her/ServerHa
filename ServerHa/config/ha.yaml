@@ -1,0 +1,73 @@
+#(debug -1 info 0 warn 1 error 2)
+logs:
+  isshowdb: true 
+  isonlyfa: false
+  logdfile: ./logs/db.log 
+  loglevel: 1 
+  logmfile: ./logs/logm.log 
+  maxsize: 10   #单个文件保留最大N兆
+  maxback: 180  #保留日志的最大个数
+  maxdays: 180  #保留日志的最大天数
+
+
+#状态切换请求和网管端口
+httpvip: 192.168.92.155
+httpport: 9999
+
+seriesne:
+  detectmult: 3     #报文最大失效的个数
+  vip:                 #串联网元vip 
+    #串联网元vip列表
+    #- ip: 10.9.14.32
+    #  netment: vlr
+    - ip: 10.9.14.35
+      netment: slr
+  
+#主备站点间配置
+station:
+    #优先级 1-255
+  priority: 100
+
+  #是否抢占模式
+  preeempt: false
+
+  #本站点
+  self: 
+    #本站点vip
+    vip: 192.168.92.155
+    #本站点物理ip
+    pip: 10.9.14.32
+    #本站点另一个物理ip
+    sip: 10.9.14.33
+
+  #对端站点  #自动切换为MASTER:1 #触发告警人工切换:2
+  paralle:
+    #报文最大失效的个数
+    detectmult: 6
+    #物理ip全部正常，vip失效
+    allupmode: 1 
+    #物理ip一个正常，vip失效
+    oneupmode: 1 
+    #物理ip全部失效，vip失效
+    zeroupmode: 1 
+    #对端站点vip
+    vip: 10.9.14.34
+    #对端站点物理ip
+    pip:
+      #对端站点物理ip列表
+      - ip: 10.9.14.32
+      - ip: 10.9.14.33
+
+#站内节点间配置
+internal:
+  iterpip: 192.168.92.129 #节点物理ip
+  routerid: 233 #路由ID
+  priority: 100 #路由优先级
+  preeempt: false #是否抢占模式 
+  netdev: ens33 #网卡设备
+  itervip: 192.168.92.155 #虚拟IP
+  maskbit: 24 #掩码位数
+  interval: 5000 #时间间隔，单位ms
+  testtime: 5000 #测试网络延时发送vrrp时间间隔，单位ms,正式环境设置为0，使不生效。
+
+

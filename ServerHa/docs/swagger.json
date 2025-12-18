@@ -1,0 +1,373 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "花会沿路盛开,你以后的路也是",
+        "title": "ha example api",
+        "contact": {
+            "name": "still-her"
+        },
+        "version": "1.0"
+    },
+    "host": "10.9.14.32:9999",
+    "basePath": "/",
+    "paths": {
+        "/nms/betweensite/backupreq": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NMS"
+                ],
+                "summary": "请求使此站点成为备",
+                "responses": {}
+            }
+        },
+        "/nms/betweensite/masterreq": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NMS"
+                ],
+                "summary": "请求使此站点成为主",
+                "responses": {}
+            }
+        },
+        "/nms/betweensite/seriesne": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NMS"
+                ],
+                "summary": "获取当前站点同级网元状态",
+                "responses": {
+                    "200": {
+                        "description": "当前站点同级网元状态",
+                        "schema": {
+                            "$ref": "#/definitions/station.Seriesnestavipslice"
+                        }
+                    }
+                }
+            }
+        },
+        "/nms/betweensite/statinfo": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NMS"
+                ],
+                "summary": "获取当前站点信息",
+                "responses": {
+                    "200": {
+                        "description": "当前站点信息",
+                        "schema": {
+                            "$ref": "#/definitions/station.Betweensiteinfo"
+                        }
+                    }
+                }
+            }
+        },
+        "/nms/touchreq/alonebackup": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NMS"
+                ],
+                "summary": "一键请求使此站点独立且成为备",
+                "responses": {}
+            }
+        },
+        "/nms/touchreq/alonemaster": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NMS"
+                ],
+                "summary": "一键请求使此站点独立且成为主",
+                "responses": {}
+            }
+        },
+        "/nms/touchreq/aloneremove": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NMS"
+                ],
+                "summary": "一键请求使此站点独立取消",
+                "responses": {}
+            }
+        },
+        "/nms/touchreq/masterreq": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NMS"
+                ],
+                "summary": "一键请求使此站点节点成为主",
+                "responses": {}
+            }
+        },
+        "/nms/touchreq/nodeinfo": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NMS"
+                ],
+                "summary": "一键请求使此站点节点信息",
+                "responses": {}
+            }
+        },
+        "/nms/touchreq/voltesta": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NMS"
+                ],
+                "summary": "一键请求使此站点节点VOLTE状态",
+                "responses": {}
+            }
+        },
+        "/nms/withinsite/backupreq": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NMS"
+                ],
+                "summary": "请求使站点内某一节点成为备",
+                "responses": {}
+            }
+        },
+        "/nms/withinsite/masterreq": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NMS"
+                ],
+                "summary": "请求使站点内某一节点成为主",
+                "responses": {}
+            }
+        },
+        "/nms/withinsite/nodeinfo": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NMS"
+                ],
+                "summary": "获取站点内主节点信息",
+                "responses": {
+                    "200": {
+                        "description": "当前站点内主节点信息",
+                        "schema": {
+                            "$ref": "#/definitions/internal.Withinsiteinfo"
+                        }
+                    }
+                }
+            }
+        },
+        "/run/backupreq/negotiate": {
+            "get": {
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "RUN"
+                ],
+                "summary": "申请本站点为备",
+                "responses": {}
+            }
+        },
+        "/run/hearbeat/negotiate": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "RUN"
+                ],
+                "summary": "站点间心跳加协商主备关系",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "优先级",
+                        "name": "priority",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "是否抢占",
+                        "name": "preeempt",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "当前状态",
+                        "name": "pstatuss",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/run/masterreq/negotiate": {
+            "get": {
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "RUN"
+                ],
+                "summary": "申请本站点为主",
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "internal.Withinsiteinfo": {
+            "type": "object",
+            "properties": {
+                "itervip": {
+                    "description": "虚拟IP",
+                    "type": "string"
+                },
+                "maskbit": {
+                    "description": "掩码位数",
+                    "type": "string"
+                },
+                "netdev": {
+                    "description": "网卡设备",
+                    "type": "string"
+                },
+                "nodepip": {
+                    "description": "主节点的物理ip",
+                    "type": "string"
+                },
+                "preeempt": {
+                    "description": "节点是否抢占模式",
+                    "type": "boolean"
+                },
+                "priority": {
+                    "description": "节点的优先级",
+                    "type": "integer"
+                },
+                "reason": {
+                    "description": "上次切换原因",
+                    "type": "string"
+                },
+                "routerid": {
+                    "description": "节点的优先级",
+                    "type": "integer"
+                },
+                "statu": {
+                    "description": "当前节点状态",
+                    "type": "integer"
+                },
+                "user": {
+                    "description": "上次切换用户",
+                    "type": "string"
+                },
+                "when": {
+                    "description": "上次切换时间",
+                    "type": "string"
+                }
+            }
+        },
+        "station.Betweensiteinfo": {
+            "type": "object",
+            "properties": {
+                "abimaster": {
+                    "description": "站点具备主的能力值，0具备，其他值",
+                    "type": "integer"
+                },
+                "handmaster": {
+                    "description": "不独立时上次为主的时间戳",
+                    "type": "integer"
+                },
+                "independent": {
+                    "description": "站点是否独立",
+                    "type": "boolean"
+                },
+                "preeempt": {
+                    "description": "站点是否抢占模式",
+                    "type": "boolean"
+                },
+                "priority": {
+                    "description": "站点的优先级",
+                    "type": "integer"
+                },
+                "reason": {
+                    "description": "上次切换原因",
+                    "type": "string"
+                },
+                "stationvip": {
+                    "description": "本站点vip",
+                    "type": "string"
+                },
+                "statu": {
+                    "description": "当前节点状态",
+                    "type": "integer"
+                },
+                "user": {
+                    "description": "上次切换用户",
+                    "type": "string"
+                },
+                "when": {
+                    "description": "上次切换时间",
+                    "type": "string"
+                }
+            }
+        },
+        "station.Seriesnestavipslice": {
+            "type": "object",
+            "properties": {
+                "ip": {
+                    "description": "ip",
+                    "type": "string"
+                },
+                "netment": {
+                    "description": "网元名字",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态",
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,255 @@
+basePath: /
+definitions:
+  internal.Withinsiteinfo:
+    properties:
+      itervip:
+        description: 虚拟IP
+        type: string
+      maskbit:
+        description: 掩码位数
+        type: string
+      netdev:
+        description: 网卡设备
+        type: string
+      nodepip:
+        description: 主节点的物理ip
+        type: string
+      preeempt:
+        description: 节点是否抢占模式
+        type: boolean
+      priority:
+        description: 节点的优先级
+        type: integer
+      reason:
+        description: 上次切换原因
+        type: string
+      routerid:
+        description: 节点的优先级
+        type: integer
+      statu:
+        description: 当前节点状态
+        type: integer
+      user:
+        description: 上次切换用户
+        type: string
+      when:
+        description: 上次切换时间
+        type: string
+    type: object
+  station.Betweensiteinfo:
+    properties:
+      abimaster:
+        description: 站点具备主的能力值，0具备，其他值
+        type: integer
+      handmaster:
+        description: 不独立时上次为主的时间戳
+        type: integer
+      independent:
+        description: 站点是否独立
+        type: boolean
+      preeempt:
+        description: 站点是否抢占模式
+        type: boolean
+      priority:
+        description: 站点的优先级
+        type: integer
+      reason:
+        description: 上次切换原因
+        type: string
+      stationvip:
+        description: 本站点vip
+        type: string
+      statu:
+        description: 当前节点状态
+        type: integer
+      user:
+        description: 上次切换用户
+        type: string
+      when:
+        description: 上次切换时间
+        type: string
+    type: object
+  station.Seriesnestavipslice:
+    properties:
+      ip:
+        description: ip
+        type: string
+      netment:
+        description: 网元名字
+        type: string
+      status:
+        description: 状态
+        type: integer
+    type: object
+host: 10.9.14.32:9999
+info:
+  contact:
+    email: wy18565760326@163.com
+    name: LiXingbo
+  description: 花会沿路盛开,你以后的路也是
+  title: ha example api
+  version: "1.0"
+paths:
+  /nms/betweensite/backupreq:
+    post:
+      produces:
+      - application/json
+      responses: {}
+      summary: 请求使此站点成为备
+      tags:
+      - NMS
+  /nms/betweensite/masterreq:
+    post:
+      produces:
+      - application/json
+      responses: {}
+      summary: 请求使此站点成为主
+      tags:
+      - NMS
+  /nms/betweensite/seriesne:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 当前站点同级网元状态
+          schema:
+            $ref: '#/definitions/station.Seriesnestavipslice'
+      summary: 获取当前站点同级网元状态
+      tags:
+      - NMS
+  /nms/betweensite/statinfo:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 当前站点信息
+          schema:
+            $ref: '#/definitions/station.Betweensiteinfo'
+      summary: 获取当前站点信息
+      tags:
+      - NMS
+  /nms/touchreq/alonebackup:
+    post:
+      produces:
+      - application/json
+      responses: {}
+      summary: 一键请求使此站点独立且成为备
+      tags:
+      - NMS
+  /nms/touchreq/alonemaster:
+    post:
+      produces:
+      - application/json
+      responses: {}
+      summary: 一键请求使此站点独立且成为主
+      tags:
+      - NMS
+  /nms/touchreq/aloneremove:
+    post:
+      produces:
+      - application/json
+      responses: {}
+      summary: 一键请求使此站点独立取消
+      tags:
+      - NMS
+  /nms/touchreq/masterreq:
+    post:
+      produces:
+      - application/json
+      responses: {}
+      summary: 一键请求使此站点节点成为主
+      tags:
+      - NMS
+  /nms/touchreq/nodeinfo:
+    get:
+      produces:
+      - application/json
+      responses: {}
+      summary: 一键请求使此站点节点信息
+      tags:
+      - NMS
+  /nms/touchreq/voltesta:
+    get:
+      produces:
+      - application/json
+      responses: {}
+      summary: 一键请求使此站点节点VOLTE状态
+      tags:
+      - NMS
+  /nms/withinsite/backupreq:
+    post:
+      produces:
+      - application/json
+      responses: {}
+      summary: 请求使站点内某一节点成为备
+      tags:
+      - NMS
+  /nms/withinsite/masterreq:
+    post:
+      produces:
+      - application/json
+      responses: {}
+      summary: 请求使站点内某一节点成为主
+      tags:
+      - NMS
+  /nms/withinsite/nodeinfo:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 当前站点内主节点信息
+          schema:
+            $ref: '#/definitions/internal.Withinsiteinfo'
+      summary: 获取站点内主节点信息
+      tags:
+      - NMS
+  /run/backupreq/negotiate:
+    get:
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      responses: {}
+      summary: 申请本站点为备
+      tags:
+      - RUN
+  /run/hearbeat/negotiate:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 优先级
+        in: query
+        name: priority
+        required: true
+        type: string
+      - description: 是否抢占
+        in: query
+        name: preeempt
+        required: true
+        type: string
+      - description: 当前状态
+        in: query
+        name: pstatuss
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: 站点间心跳加协商主备关系
+      tags:
+      - RUN
+  /run/masterreq/negotiate:
+    get:
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      responses: {}
+      summary: 申请本站点为主
+      tags:
+      - RUN
+swagger: "2.0"
